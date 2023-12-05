@@ -14,18 +14,20 @@ public class ServicioUsuarios implements IServicioUsuarios{
     private IServicioUsuarios repoUsuarios;
     @Override
     public Usuario crearUsuario(Usuario usuario) throws UsuarioException {
-
-        return null;
+        repoUsuarios.crearUsuario(usuario);
+        return usuario;
     }
 
     @Override
     public boolean borrarUsuario(Usuario usuario) throws UsuarioException {
-        return false;
+        repoUsuarios.borrarUsuario(usuario);
+        return true;
     }
 
     @Override
     public Usuario actualizarUsuario(Usuario usuario) throws UsuarioException {
-        return null;
+        repoUsuarios.actualizarUsuario(usuario);
+        return usuario;
     }
 
     @Override

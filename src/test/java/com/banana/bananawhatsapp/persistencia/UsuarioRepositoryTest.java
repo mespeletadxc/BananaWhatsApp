@@ -1,6 +1,7 @@
 package com.banana.bananawhatsapp.persistencia;
 
 import com.banana.bananawhatsapp.config.SpringConfig;
+import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +15,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SpringConfig.class})
@@ -45,7 +46,12 @@ class UsuarioRepositoryTest {
     }
 
     @Test
-    void dadoUnUsuarioNOValido_cuandoCrear_entoncesExcepcion() {
+    void dadoUnUsuarioNOValido_cuandoCrear_entoncesExcepcion() throws SQLException{
+        Usuario usuario = new Usuario(null, "Lu", "prueba", LocalDate.of(2023, 02, 15), true);
+
+        assertThrows(UsuarioException.class, () -> {
+            repo.crear(usuario);
+        });
     }
 
     @Test
@@ -57,11 +63,19 @@ class UsuarioRepositoryTest {
     }
 
     @Test
-    void dadoUnUsuarioValido_cuandoBorrar_entoncesOK() {
+    void dadoUnUsuarioValido_cuandoBorrar_entoncesOK() throws SQLException{
+        Usuario usuario = new Usuario(3, "Luisa", "prueba@prueba.com", LocalDate.now(), true);
+
+        assertTrue(repo.borrar(usuario));
     }
 
     @Test
-    void dadoUnUsuarioNOValido_cuandoBorrar_entoncesExcepcion() {
+    void dadoUnUsuarioNOValido_cuandoBorrar_entoncesExcepcion() throws SQLException{
+        Usuario usuario = new Usuario(1000, "Luisa", "prueba@prueba.com", LocalDate.now(), true);
+
+        assertThrows(UsuarioException.class, () -> {
+            repo.borrar(usuario);
+        });
     }
 
     @Test

@@ -21,6 +21,7 @@ public class UsuarioRepository implements IUsuarioRepository{
                 Connection conn = DriverManager.getConnection(urlConn);
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
+            usuario.valido();
             stmt.setString(4, usuario.getNombre());
             stmt.setString(3, usuario.getEmail());
             stmt.setString(2, usuario.getAlta().toString());
@@ -58,7 +59,29 @@ public class UsuarioRepository implements IUsuarioRepository{
 
     @Override
     public boolean borrar(Usuario usuario) throws SQLException {
-        return false;
+        //DELETE FROM `usuario` WHERE `id`=3
+        String sql = "DELETE FROM usuario WHERE id = ?";
+
+
+        try (
+                Connection conn = DriverManager.getConnection(urlConn);
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
+            stmt.setInt(1, usuario.getId());
+
+            int rows = stmt.executeUpdate();
+
+            stmt.close();
+            System.out.println("Usuario eliminado: " + usuario);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UsuarioException("Error en el delete de usuario");
+
+        }
+        return true;
+
+
     }
 
     @Override
