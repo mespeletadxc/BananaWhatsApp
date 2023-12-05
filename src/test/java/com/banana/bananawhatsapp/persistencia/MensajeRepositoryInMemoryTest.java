@@ -9,12 +9,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SpringConfig.class})
-class MensajeRepositoryTest {
+@ActiveProfiles("dev")
+class MensajeRepositoryInMemoryTest {
 
     @Autowired
     private ApplicationContext context;
@@ -27,30 +27,6 @@ class MensajeRepositoryTest {
         assertNotNull(context);
         assertNotNull(repo);
         System.out.println(repo.getUrlConn());
-    }
-
-    @Test
-    void dadoUnMensajeValido_cuandoCrear_entoncesMensajeValido() {
-    }
-
-    @Test
-    void dadoUnMensajeNOValido_cuandoCrear_entoncesExcepcion() {
-    }
-
-    @Test
-    void dadoUnUsuarioValido_cuandoObtener_entoncesListaMensajes() {
-    }
-
-    @Test
-    void dadoUnUsuarioNOValido_cuandoObtener_entoncesExcepcion() {
-    }
-
-    @Test
-    void dadoUnUsuarioValido_cuandoBorrarTodos_entoncesOK() {
-    }
-
-    @Test
-    void dadoUnUsuarioNOValido_cuandoBorrarTodos_entoncesExcepcion() {
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Setter
 @Getter
-public class UsuarioRepositoryJDBC implements IUsuarioRepository{
+public class UsuarioRepositoryInMemory implements IUsuarioRepository{
 
     private String urlConn;
     @Override

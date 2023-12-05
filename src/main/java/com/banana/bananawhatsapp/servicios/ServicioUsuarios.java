@@ -4,11 +4,17 @@ import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import lombok.Setter;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+
 @Setter
 public class ServicioUsuarios implements IServicioUsuarios{
     private IServicioUsuarios repoUsuarios;
     @Override
     public Usuario crearUsuario(Usuario usuario) throws UsuarioException {
+
         return null;
     }
 
