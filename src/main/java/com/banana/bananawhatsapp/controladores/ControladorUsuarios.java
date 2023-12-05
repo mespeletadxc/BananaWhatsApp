@@ -4,16 +4,20 @@ import com.banana.bananawhatsapp.modelos.Usuario;
 import com.banana.bananawhatsapp.servicios.IServicioUsuarios;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.sql.SQLException;
 
 @Controller
 @Setter
 @Getter
 public class ControladorUsuarios {
 
+    @Autowired
     private IServicioUsuarios servicioUsuarios;
 
-    public Usuario alta(Usuario nuevo) {
+    public Usuario alta(Usuario nuevo) throws SQLException{
         try {
             Usuario usuario = servicioUsuarios.crearUsuario(nuevo);
             System.out.println("Usuario creado: " + nuevo);
@@ -25,7 +29,7 @@ public class ControladorUsuarios {
 
     }
 
-    public Usuario actualizar(Usuario usuario) {
+    public Usuario actualizar(Usuario usuario) throws SQLException{
         try {
             servicioUsuarios.actualizarUsuario(usuario);
             System.out.println("Usuario actualizado: " + usuario);
@@ -37,7 +41,7 @@ public class ControladorUsuarios {
 
     }
 
-    public boolean baja(Usuario usuario) {
+    public boolean baja(Usuario usuario) throws SQLException{
         try {
             boolean isOK = servicioUsuarios.borrarUsuario(usuario);
             System.out.println("Usuario borrado: " + usuario);

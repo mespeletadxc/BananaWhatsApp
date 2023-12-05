@@ -33,7 +33,7 @@ public class ReposConfig {
         String dbUrlEnv = env.getProperty("db.conn", String.class);
         System.out.println("dbUrlEnv:" + dbUrlEnv);
 
-        MensajeRepository repo = new MensajeRepository();
+        MensajeJDBCRepository repo = new MensajeJDBCRepository();
         repo.setUrlConn(dbUrl);
         return repo;
     }
@@ -58,7 +58,7 @@ public class ReposConfig {
         String dbUrlEnv = env.getProperty("db.conn", String.class);
         System.out.println("dbUrlEnv:" + dbUrlEnv);
 
-        UsuarioRepository repo = new UsuarioRepository();
+        UsuarioJDBCRepository repo = new UsuarioJDBCRepository();
         repo.setUrlConn(dbUrl);
         return repo;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class MensajeRepository implements IMensajeRepository {
+public class MensajeJDBCRepository implements IMensajeRepository {
 
     private String urlConn;
     @Override

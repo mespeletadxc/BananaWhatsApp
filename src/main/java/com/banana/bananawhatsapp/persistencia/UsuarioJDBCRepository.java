@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Setter
 @Getter
-public class UsuarioRepository implements IUsuarioRepository{
+public class UsuarioJDBCRepository implements IUsuarioRepository{
 
     private String urlConn;
     @Override
