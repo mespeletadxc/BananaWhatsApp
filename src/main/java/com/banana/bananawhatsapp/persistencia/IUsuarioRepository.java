@@ -15,4 +15,6 @@ public interface IUsuarioRepository {
 
     public Set<Usuario> obtenerPosiblesDestinatarios(Integer id, Integer max) throws SQLException;
 
+    public String getUrlConn();
+
 }
