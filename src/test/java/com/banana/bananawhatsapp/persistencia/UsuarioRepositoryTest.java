@@ -35,6 +35,7 @@ class UsuarioRepositoryTest {
         assertNotNull(repo);
         System.out.println(repo.getUrlConn());
     }
+
     @Test
     void dadoUnUsuarioValido_cuandoCrear_entoncesUsuarioValido() throws SQLException {
         Usuario usuario = new Usuario(null, "Luisa", "prueba@prueba.com", LocalDate.now(), true);
@@ -42,11 +43,11 @@ class UsuarioRepositoryTest {
         System.out.println(usuario);
 
         assertThat(usuario.getId(), greaterThan(0));
-        System.out.println("Id insertado: "+usuario.getId());
+        System.out.println("Id insertado: " + usuario.getId());
     }
 
     @Test
-    void dadoUnUsuarioNOValido_cuandoCrear_entoncesExcepcion() throws SQLException{
+    void dadoUnUsuarioNOValido_cuandoCrear_entoncesExcepcion() throws SQLException {
         Usuario usuario = new Usuario(null, "Lu", "prueba", LocalDate.of(2023, 02, 15), true);
 
         assertThrows(UsuarioException.class, () -> {
@@ -55,11 +56,22 @@ class UsuarioRepositoryTest {
     }
 
     @Test
-    void dadoUnUsuarioValido_cuandoActualizar_entoncesUsuarioValido() {
+    void dadoUnUsuarioValido_cuandoActualizar_entoncesUsuarioValido() throws SQLException{
+        Usuario usuario = new Usuario(1, "Juana", "juana@j.com", LocalDate.now(), true);
+        repo.actualizar(usuario);
+
+        assertThat(usuario.getId(), greaterThan(0));
     }
 
+
+
     @Test
-    void dadoUnUsuarioNOValido_cuandoActualizar_entoncesExcepcion() {
+    void dadoUnUsuarioNOValido_cuandoActualizar_entoncesExcepcion() throws SQLException{
+        Usuario usuario = new Usuario(1, "Juana", "juana@j.com", LocalDate.now(), false);
+
+        assertThrows(UsuarioException.class, () -> {
+            repo.actualizar(usuario);
+        });
     }
 
     @Test
