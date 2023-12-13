@@ -135,7 +135,8 @@ public class MensajeJDBCRepository implements IMensajeRepository {
     @Override
     public boolean borrarTodos(Usuario usuario, Usuario otroUsuario) throws SQLException {
 
-        String sql = "DELETE FROM mensaje WHERE (from_user = ? AND to_user = ?) OR (from_user = ? AND to_user = ?)";
+        //String sql = "DELETE FROM mensaje WHERE (from_user = ? AND to_user = ?) OR (from_user = ? AND to_user = ?)";
+        String sql = "DELETE FROM mensaje WHERE (from_user = ? AND to_user = ?)";
 
         try (
                 Connection conn = DriverManager.getConnection(urlConn);
@@ -146,9 +147,7 @@ public class MensajeJDBCRepository implements IMensajeRepository {
 
             stmt.setInt(1, usuario.getId());
             stmt.setInt(2, otroUsuario.getId());
-            stmt.setInt(3, otroUsuario.getId());
-            stmt.setInt(4, usuario.getId());
-            ResultSet rs = stmt.executeQuery();
+
 
             int rows = stmt.executeUpdate();
 

@@ -40,8 +40,8 @@ class MensajeJDBCRepositoryTest {
 
     @Test
     void dadoUnMensajeValido_cuandoCrear_entoncesMensajeValido() throws SQLException {
-        Usuario remitente = new Usuario(11, "Juana", "juana@j.com", LocalDate.now(), true);
-        Usuario destinatario = new Usuario(12, "Luis", "luis@l.com", LocalDate.now(), true);
+        Usuario remitente = new Usuario(12, "Juana", "juana@j.com", LocalDate.now(), true);
+        Usuario destinatario = new Usuario(11, "Luis", "luis@l.com", LocalDate.now(), true);
 
         Mensaje mensaje = new Mensaje(null, remitente, destinatario, "Probando crear", LocalDate.now());
         repo.crear(mensaje);
@@ -87,11 +87,22 @@ class MensajeJDBCRepositoryTest {
     }
 
     @Test
-    void dadoUnUsuarioValido_cuandoBorrarTodos_entoncesOK() {
+    void dadoUnUsuarioValido_cuandoBorrarTodos_entoncesOK() throws SQLException{
+        Usuario remitente = new Usuario(12, "Juana", "juana@j.com", LocalDate.now(), true);
+        Usuario destinatario = new Usuario(11, "Luis", "luis@l.com", LocalDate.now(), true);
+
+        assertTrue(repo.borrarTodos(remitente, destinatario));
     }
 
     @Test
-    void dadoUnUsuarioNOValido_cuandoBorrarTodos_entoncesExcepcion() {
+    void dadoUnUsuarioNOValido_cuandoBorrarTodos_entoncesExcepcion() throws SQLException{
+        Usuario remitente = new Usuario(null, "Juana", "j", LocalDate.now(), true);
+        Usuario destinatario = new Usuario(14, "Luis", "luis@l.com", LocalDate.now(), true);
+
+
+        assertThrows(UsuarioException.class, () -> {
+            repo.borrarTodos(remitente,destinatario);
+        });
     }
 
 }
