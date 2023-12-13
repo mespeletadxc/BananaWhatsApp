@@ -16,6 +16,7 @@ import java.util.List;
 public class MensajeJDBCRepository implements IMensajeRepository {
 
     private String urlConn;
+
     @Override
     public Mensaje crear(Mensaje mensaje) throws SQLException {
 
@@ -27,8 +28,8 @@ public class MensajeJDBCRepository implements IMensajeRepository {
         ) {
             mensaje.valido();
 
-            stmt.setInt(4,mensaje.getDestinatario().getId());
-            stmt.setInt(3,mensaje.getRemitente().getId());
+            stmt.setInt(4, mensaje.getDestinatario().getId());
+            stmt.setInt(3, mensaje.getRemitente().getId());
             stmt.setString(2, mensaje.getFecha().toString());
             stmt.setString(1, mensaje.getCuerpo());
 
@@ -57,13 +58,13 @@ public class MensajeJDBCRepository implements IMensajeRepository {
     public List<Mensaje> obtener(Usuario usuario, Usuario otroUsuario) throws SQLException {
         List<Mensaje> mensajes = new ArrayList<>();
 
-       // String sql = "SELECT * FROM mensaje m WHERE (m.remitente = ? AND m.destinatario = ?)";
+        // String sql = "SELECT * FROM mensaje m WHERE (m.remitente = ? AND m.destinatario = ?)";
 
-         String sql = "SELECT m.*, u_remitente.*, u_destinatario.* " +
-                 "FROM mensaje m " +
-                 "JOIN usuario u_remitente ON m.from_user = u_remitente.id " +
-                 "JOIN usuario u_destinatario ON m.to_user = u_destinatario.id " +
-                 "WHERE (m.from_user = ? AND m.to_user = ?) OR (m.from_user = ? AND m.to_user = ?)";
+        String sql = "SELECT m.*, u_remitente.*, u_destinatario.* " +
+                "FROM mensaje m " +
+                "JOIN usuario u_remitente ON m.from_user = u_remitente.id " +
+                "JOIN usuario u_destinatario ON m.to_user = u_destinatario.id " +
+                "WHERE (m.from_user = ? AND m.to_user = ?) OR (m.from_user = ? AND m.to_user = ?)";
 
 
         try (
@@ -132,7 +133,36 @@ public class MensajeJDBCRepository implements IMensajeRepository {
     }
 
     @Override
-    public boolean borrarTodos(Usuario usuario) throws SQLException {
-        return false;
+    public boolean borrarTodos(Usuario usuario, Usuario otroUsuario) throws SQLException {
+
+        String sql = "DELETE FROM mensaje WHERE (from_user = ? AND to_user = ?) OR (from_user = ? AND to_user = ?)";
+
+        try (
+                Connection conn = DriverManager.getConnection(urlConn);
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
+            usuario.valido();
+            otroUsuario.valido();
+
+            stmt.setInt(1, usuario.getId());
+            stmt.setInt(2, otroUsuario.getId());
+            stmt.setInt(3, otroUsuario.getId());
+            stmt.setInt(4, usuario.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            int rows = stmt.executeUpdate();
+
+
+            stmt.close();
+            System.out.println("Se eliminaron " + rows + " mensajes del chat entre " + usuario.getId() + " y " + otroUsuario.getId());
+
+
+         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error al borrar el chat", e);
+        }
+
+
+        return true;
     }
 }

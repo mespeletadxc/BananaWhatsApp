@@ -24,7 +24,7 @@ public class MensajeRepositoryInMemory implements IMensajeRepository{
     }
 
     @Override
-    public boolean borrarTodos(Usuario usuario) throws SQLException {
+    public boolean borrarTodos(Usuario usuario, Usuario otroUsuario) throws SQLException {
         return false;
     }
 }
