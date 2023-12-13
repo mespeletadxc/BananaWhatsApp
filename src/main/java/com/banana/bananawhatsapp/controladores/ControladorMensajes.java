@@ -5,13 +5,14 @@ import com.banana.bananawhatsapp.modelos.Usuario;
 import com.banana.bananawhatsapp.servicios.IServicioMensajeria;
 import org.springframework.stereotype.Controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
 public class ControladorMensajes {
     private IServicioMensajeria servicioMensajeria;
 
-    public boolean enviarMensaje(Integer remitente, Integer destinatario, String texto) {
+    public boolean enviarMensaje(Integer remitente, Integer destinatario, String texto) throws SQLException {
         try {
             Usuario uRemitente = new Usuario();
             uRemitente.setId(remitente);
@@ -28,7 +29,7 @@ public class ControladorMensajes {
 
     }
 
-    public boolean mostrarChat(Integer remitente, Integer destinatario) {
+    public boolean mostrarChat(Integer remitente, Integer destinatario) throws SQLException {
         try {
             Usuario uRemitente = new Usuario();
             uRemitente.setId(remitente);
@@ -52,7 +53,7 @@ public class ControladorMensajes {
 
     }
 
-    public boolean eliminarChatConUsuario(Integer remitente, Integer destinatario) {
+    public boolean eliminarChatConUsuario(Integer remitente, Integer destinatario) throws SQLException {
         try {
             Usuario uRemitente = new Usuario();
             uRemitente.setId(remitente);
