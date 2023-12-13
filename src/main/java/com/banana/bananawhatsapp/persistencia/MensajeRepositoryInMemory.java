@@ -19,7 +19,7 @@ public class MensajeRepositoryInMemory implements IMensajeRepository{
     }
 
     @Override
-    public List<Mensaje> obtener(Usuario usuario) throws SQLException {
+    public List<Mensaje> obtener(Usuario usuario, Usuario otroUsuario) throws SQLException {
         return null;
     }
 

@@ -9,7 +9,8 @@ import java.util.List;
 public interface IMensajeRepository {
     public Mensaje crear(Mensaje mensaje) throws SQLException;
 
-    public List<Mensaje> obtener(Usuario usuario) throws SQLException;
+    public List<Mensaje> obtener(Usuario usuario, Usuario otroUsuario) throws SQLException;
+
 
     public boolean borrarTodos(Usuario usuario) throws SQLException;
 
