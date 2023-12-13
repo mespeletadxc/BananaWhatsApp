@@ -70,6 +70,8 @@ public class MensajeJDBCRepository implements IMensajeRepository {
                 Connection conn = DriverManager.getConnection(urlConn);
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
+            usuario.valido();
+            otroUsuario.valido();
 
             //stmt.setInt(1, usuario.getId());
             //stmt.setInt(2, otroUsuario.getId());

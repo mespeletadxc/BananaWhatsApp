@@ -2,6 +2,7 @@ package com.banana.bananawhatsapp.persistencia;
 
 import com.banana.bananawhatsapp.config.SpringConfig;
 import com.banana.bananawhatsapp.exceptions.MensajeException;
+import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Mensaje;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import org.junit.jupiter.api.Test;
@@ -39,8 +40,8 @@ class MensajeJDBCRepositoryTest {
 
     @Test
     void dadoUnMensajeValido_cuandoCrear_entoncesMensajeValido() throws SQLException {
-        Usuario remitente = new Usuario(1, "Juana", "juana@j.com", LocalDate.now(), true);
-        Usuario destinatario = new Usuario(2, "Luis", "luis@l.com", LocalDate.now(), true);
+        Usuario remitente = new Usuario(11, "Juana", "juana@j.com", LocalDate.now(), true);
+        Usuario destinatario = new Usuario(12, "Luis", "luis@l.com", LocalDate.now(), true);
 
         Mensaje mensaje = new Mensaje(null, remitente, destinatario, "Probando crear", LocalDate.now());
         repo.crear(mensaje);
@@ -63,8 +64,8 @@ class MensajeJDBCRepositoryTest {
 
     @Test
     void dadoUnUsuarioValido_cuandoObtener_entoncesListaMensajes() throws SQLException{
-        Usuario remitente = new Usuario(1, "Juana", "juana@j.com", LocalDate.now(), true);
-        Usuario destinatario = new Usuario(2, "Luis", "luis@l.com", LocalDate.now(), true);
+        Usuario remitente = new Usuario(11, "Juana", "juana@j.com", LocalDate.now(), true);
+        Usuario destinatario = new Usuario(12, "Luis", "luis@l.com", LocalDate.now(), true);
 
 
         List<Mensaje> mensajes = repo.obtener(remitente,destinatario);
@@ -75,7 +76,14 @@ class MensajeJDBCRepositoryTest {
     }
 
     @Test
-    void dadoUnUsuarioNOValido_cuandoObtener_entoncesExcepcion() {
+    void dadoUnUsuarioNOValido_cuandoObtener_entoncesExcepcion() throws SQLException {
+        Usuario remitente = new Usuario(null, "Juana", "j", LocalDate.now(), true);
+        Usuario destinatario = new Usuario(14, "Luis", "luis@l.com", LocalDate.now(), true);
+
+
+        assertThrows(UsuarioException.class, () -> {
+            List<Mensaje> mensajes = repo.obtener(remitente,destinatario);
+        });
     }
 
     @Test
