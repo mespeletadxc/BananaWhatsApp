@@ -31,4 +31,8 @@ public class UsuarioRepositoryInMemory implements IUsuarioRepository{
     public Set<Usuario> obtenerPosiblesDestinatarios(Integer id, Integer max) throws SQLException {
         return null;
     }
+    @Override
+    public Usuario bajaMensajes(Usuario usuario) throws SQLException{
+        return null;
+    }
 }

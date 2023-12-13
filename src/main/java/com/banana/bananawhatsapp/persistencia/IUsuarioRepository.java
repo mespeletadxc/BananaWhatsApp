@@ -11,6 +11,8 @@ public interface IUsuarioRepository {
 
     public Usuario actualizar(Usuario usuario) throws SQLException;
 
+    public Usuario bajaMensajes(Usuario usuario) throws SQLException;
+
     public boolean borrar(Usuario usuario) throws SQLException;
 
     public Set<Usuario> obtenerPosiblesDestinatarios(Integer id, Integer max) throws SQLException;

@@ -109,4 +109,33 @@ public class UsuarioJDBCRepository implements IUsuarioRepository{
     public Set<Usuario> obtenerPosiblesDestinatarios(Integer id, Integer max) throws SQLException {
         return null;
     }
+    @Override
+    public Usuario bajaMensajes(Usuario usuario) throws SQLException{
+        if (usuario.isActivo()){
+            String sql = "UPDATE usuario u SET u.activo = false WHERE ID = ?";
+            try (
+                    Connection conn = DriverManager.getConnection(urlConn);
+                    PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ) {
+                usuario.valido();
+
+                stmt.setInt(1, usuario.getId());
+                int rows = stmt.executeUpdate();
+                stmt.close();
+                System.out.println("Usuario dado de baja: " + usuario);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new UsuarioException("Error en l baja de usuario");
+
+            }
+
+        }
+        else{
+            System.out.println("Usuario ya esta dado de baja");
+
+        }
+        return usuario;
+
+    }
 }

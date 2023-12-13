@@ -89,7 +89,21 @@ class UsuarioJDBCRepositoryTest {
             repo.borrar(usuario);
         });
     }
+    @Test
+    void dadoUnUsuarioValido_CuandobajaMensajes_entoncesOK() throws SQLException {
+        Usuario usuario = new Usuario(1, "Juana", "juana@j.com", LocalDate.now(), true);
+        repo.bajaMensajes(usuario);
 
+        assertThat(usuario.getId(), greaterThan(0));
+    }
+    @Test
+    void dadoUnUsuarioNOValido_CuandobajaMensajes_entoncesException() throws SQLException {
+        Usuario usuario = new Usuario(null, "Luisa", "p", LocalDate.ofYearDay(2023,12), true);
+
+        assertThrows(UsuarioException.class, () -> {
+            repo.bajaMensajes(usuario);
+        });
+    }
     @Test
     void dadoUnUsuarioValido_cuandoObtenerPosiblesDestinatarios_entoncesLista() {
     }
